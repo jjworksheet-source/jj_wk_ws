@@ -145,7 +145,7 @@ def create_pdf_with_kaiu(words_and_sentences, school, level, font_name):
     buffer.seek(0)
     return buffer
 
-# ===== 上傳到 Google Drive =====
+# ===== 上傳到 Google Drive (修正版) =====
 def upload_to_drive(drive_service, file_buffer, filename, folder_id):
     try:
         file_metadata = {
@@ -153,11 +153,16 @@ def upload_to_drive(drive_service, file_buffer, filename, folder_id):
             'parents': [folder_id]
         }
         media = MediaIoBaseUpload(file_buffer, mimetype='application/pdf', resumable=True)
+        
+        # 執行上傳
         file = drive_service.files().create(
             body=file_metadata,
             media_body=media,
-            fields='id'
+            fields='id',
+            # 關鍵：這行確保檔案不會因為 Service Account 沒空間而失敗
+            supportsAllDrives=True 
         ).execute()
+        
         return file.get('id')
     except Exception as e:
         st.error(f"上傳失敗：{e}")
