@@ -29,7 +29,8 @@ SCOPES = [
 @st.cache_resource
 def register_font():
     try:
-        pdfmetrics.registerFont(TTFont('KaiU', 'fonts/kaiu.ttf'))
+        # 使用根目錄下的 simkai.ttf
+        pdfmetrics.registerFont(TTFont('KaiU', 'simkai.ttf'))
         return 'KaiU'
     except Exception as e:
         st.error(f"字型載入失敗：{e}")
