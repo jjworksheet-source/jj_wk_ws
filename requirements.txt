@@ -1,6 +1,5 @@
 streamlit
 gspread
 google-auth
-reportlab
-pandas
-google-api-python-client
+fpdf2
+requests
