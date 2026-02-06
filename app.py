@@ -7,7 +7,12 @@ from datetime import datetime
 
 # ==================== 初始化與連線 ====================
 
-def init_connection():
+def main():
+    st.set_page_config(page_title="螺旋式學習教材管理系統", layout="wide")
+    st.title("🚀 JJ 螺旋式學習教材管理系統")
+
+    # === DEBUG: 顯示目前 secrets 的 key ===
+    st.write("DEBUG - secrets keys:", list(st.secrets.keys()))def init_connection():
     """初始化 Google Sheets 連線"""
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
