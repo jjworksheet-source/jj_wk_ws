@@ -12,7 +12,17 @@ def main():
     st.title("🚀 JJ 螺旋式學習教材管理系統")
 
     # === DEBUG: 顯示目前 secrets 的 key ===
-    st.write("DEBUG - secrets keys:", list(st.secrets.keys()))def init_connection():
+    st.write("DEBUG - secrets keys:", list(st.secrets.keys()))
+
+    # 初始化連線
+    try:
+        gc = init_connection()
+        st.sidebar.success("✅ 已連線至 Google Sheets")
+    except Exception as e:
+        st.error(f"❌ 連線失敗: {e}")
+        return
+
+    # ... 後面的程式碼保持不變 ...
     """初始化 Google Sheets 連線"""
     scope = [
         "https://www.googleapis.com/auth/spreadsheets",
