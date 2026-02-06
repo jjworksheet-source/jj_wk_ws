@@ -27,7 +27,7 @@ def get_spreadsheet(client):
         spreadsheet_id = st.secrets["google_sheets"]["spreadsheet_id"]
         return client.open_by_key(spreadsheet_id)
     except Exception as e:
-        st.error(f"無法開啟試算表 (ID: {spreadsheet_id}): {e}")
+        st.error(f"無法開啟試算表: {e}")
         return None
 
 # ==================== 2. PDF 生成類別 ====================
@@ -49,7 +49,8 @@ class WorksheetPDF(FPDF):
             self.set_font("Helvetica", "", 10)
         self.cell(0, 10, f"頁碼 {self.page_no()}", align="C")
 
-def PDF Generator_file(df):
+def pdf_generator_file(df):
+    """生成 PDF 檔案"""
     pdf = WorksheetPDF()
     font_path = "simkai.ttf"
     
@@ -96,10 +97,12 @@ def main():
 
     # 初始化連線
     gc = init_connection()
-    if not gc: return
+    if not gc: 
+        return
     
     sh = get_spreadsheet(gc)
-    if not sh: return
+    if not sh: 
+        return
 
     st.sidebar.success("✅ 已連線至 Google Sheets")
     
@@ -133,11 +136,11 @@ def main():
                 st.write("預覽題目：")
                 st.dataframe(df[["學校", "詞語", "題目"]].head())
                 if st.button("生成 PDF"):
-                    pdf_output = PDF Generator_file(df)
+                    pdf_output = pdf_generator_file(df)
                     st.download_button(
                         label="下載 PDF",
                         data=bytes(pdf_output),
-                        file_name="worksheet.pdf",
+                        file_name=f"worksheet_{datetime.now().strftime('%Y%m%d')}.pdf",
                         mime="application/pdf"
                     )
             else:
