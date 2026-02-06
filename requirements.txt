@@ -1,5 +1,6 @@
-streamlit==1.31.0
-gspread==5.12.0
-google-auth==2.27.0
-requests==2.31.0
-pandas==2.1.4
+streamlit
+gspread
+google-auth
+pandas
+requests
+fpdf
